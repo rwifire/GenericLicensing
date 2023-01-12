@@ -4,7 +4,7 @@ using GenericLicensing.Domain.ValueObjects;
 
 namespace GenericLicensing.Domain.Events;
 
-internal class LicenseCreatedEvent : BaseDomainEvent
+public class LicenseCreatedEvent : BaseDomainEvent
 {
   public LicenseKey LicenseKey { get; }
   public LicenseState LicenseState { get; }
