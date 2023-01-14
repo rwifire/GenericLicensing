@@ -1,5 +1,7 @@
 ﻿using DDDBase.Models;
+using GenericLicensing.Domain.Entities;
 using GenericLicensing.Domain.Events;
+using GenericLicensing.Domain.Events.License;
 using GenericLicensing.Domain.ValueObjects;
 
 namespace GenericLicensing.Domain.Aggregates;
@@ -24,6 +26,11 @@ public class License : BaseAggregateRoot<License>
   public LicenseState LicenseState { get; private set; }
 
   /// <summary>
+  /// Information about the License Owner
+  /// </summary>
+  public LicenseOwner LicenseOwner { get; private set; }
+
+  /// <summary>
   /// Indicates whether this License is deleted
   /// </summary>
   public bool IsDeleted { get; private set; }
@@ -33,9 +40,9 @@ public class License : BaseAggregateRoot<License>
   {
   }
 
-  private License(Guid id, LicenseKey licenseKey)
+  private License(Guid id, LicenseKey licenseKey, LicenseOwner licenseOwner)
   {
-    ApplyChange(new LicenseCreatedEvent(id, licenseKey, LicenseState.Active, NextVersion()));
+    ApplyChange(new LicenseCreatedEvent(id, licenseKey, licenseOwner, LicenseState.Active, NextVersion()));
   }
 
   /// <summary>
@@ -51,6 +58,7 @@ public class License : BaseAggregateRoot<License>
   {
     _id = e.AggregateId;
     LicenseKey = e.LicenseKey;
+    LicenseOwner = e.LicenseOwner;
     LicenseState = e.LicenseState;
     IsDeleted = false;
   }
@@ -63,9 +71,9 @@ public class License : BaseAggregateRoot<License>
   /// <summary>
   /// Creates a new aggregate of the type <see cref="GrantAggregate"/>
   /// </summary>
-  public static License Create(LicenseKey key)
+  public static License Create(LicenseKey key, LicenseOwner owner)
   {
-    return new License(Guid.NewGuid(), key);
+    return new License(Guid.NewGuid(), key, owner);
   }
 }
 

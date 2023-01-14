@@ -1,10 +1,11 @@
 using FluentAssertions;
-using GenericLicensing.Domain;
 using GenericLicensing.Domain.Aggregates;
+using GenericLicensing.Domain.Entities;
 using GenericLicensing.Domain.Events;
+using GenericLicensing.Domain.Events.License;
 using GenericLicensing.Domain.ValueObjects;
 
-namespace GenericLicensing.Domain.Tests;
+namespace GenericLicensing.Domain.Tests.License;
 
 public class LicenseTests
 {
@@ -12,13 +13,16 @@ public class LicenseTests
   public void CreateLicenseCausesCorrectChange()
   {
     var key = new LicenseKey("some key");
+    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
 
-    var license = License.Create(key);
+    var license = Aggregates.License.Create(key, licenseOwner);
 
     license.Version.Should().Be(1);
     license.IsDeleted.Should().BeFalse();
     license.LicenseKey.Should().Be(key);
     license.LicenseState.Should().Be(LicenseState.Active);
+    license.LicenseOwner.LicenseOwnerId.Should().Be(licenseOwner.LicenseOwnerId);
+    license.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
   }
 
   [Fact]
@@ -26,7 +30,8 @@ public class LicenseTests
   {
     var now = DateTime.UtcNow;
     var key = new LicenseKey("some key");
-    var license = License.Create(key);
+    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
+    var license = Aggregates.License.Create(key, licenseOwner);
 
     var events = license.Events;
 
@@ -40,13 +45,17 @@ public class LicenseTests
     @event.Timestamp.Should().BeWithin(TimeSpan.FromMilliseconds(100)).After(now);
     @event.LicenseKey.Should().Be(license.LicenseKey);
     @event.LicenseState.Should().Be(license.LicenseState);
+    @event.LicenseOwner.Should().NotBeNull();
+    @event.LicenseOwner.LicenseOwnerId.Should().Be(license.LicenseOwner.LicenseOwnerId);
+    @event.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
   }
 
   [Fact]
   public void DeleteLicenseCausesCorrectChange()
   {
     var key = new LicenseKey("some Key");
-    var license = License.Create(key);
+    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
+    var license = Aggregates.License.Create(key, licenseOwner);
 
     license.Delete();
 
@@ -58,7 +67,8 @@ public class LicenseTests
   public void DeleteLicenseCausesCorrectEvent()
   {
     var key = new LicenseKey("some Key");
-    var license = License.Create(key);
+    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
+    var license = Aggregates.License.Create(key, licenseOwner);
 
     license.Delete();
 

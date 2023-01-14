@@ -1,6 +1,6 @@
 ﻿using DDDBase.Models;
 
-namespace GenericLicensing.Domain.Events;
+namespace GenericLicensing.Domain.Events.License;
 
 public class LicenseDeletedEvent : BaseDomainEvent
 {
