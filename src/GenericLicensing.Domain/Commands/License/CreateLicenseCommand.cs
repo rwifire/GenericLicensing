@@ -2,11 +2,11 @@
 using FluentValidation;
 using FluentValidation.Results;
 using GenericLicensing.Domain.Entities;
-using GenericLicensing.Domain.Validators;
+using MediatR;
 
 namespace GenericLicensing.Domain.Commands.License;
 
-public class CreateLicenseCommand : ICommand
+public class CreateLicenseCommand : ICommand, IRequest<Aggregates.License>
 {
   private readonly IValidator<CreateLicenseCommand> _validator;
   public LicenseOwner LicenseOwner { get; }

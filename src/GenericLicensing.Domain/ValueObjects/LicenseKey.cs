@@ -11,6 +11,11 @@ public class LicenseKey : ValueObject
     Key = licenseKey;
   }
 
+  public override string ToString()
+  {
+    return Key;
+  }
+
   protected override IEnumerable<object> GetEqualityComponents()
   {
     yield return Key;

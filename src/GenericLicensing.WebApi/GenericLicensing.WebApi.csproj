@@ -7,9 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.4.0" />
+      <PackageReference Include="MediatR" Version="11.1.0" />
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GenericLicensing.Contracts\GenericLicensing.Contracts.csproj" />
+      <ProjectReference Include="..\GenericLicensing.Domain\GenericLicensing.Domain.csproj" />
     </ItemGroup>
 
 </Project>

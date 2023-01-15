@@ -4,7 +4,7 @@ using GenericLicensing.Domain.Entities;
 using GenericLicensing.Domain.Validators;
 using GenericLicensing.Domain.ValueObjects;
 
-namespace GenericLicensing.Domain.Tests.Commands;
+namespace GenericLicensing.Domain.Tests.License.Commands;
 
 public class CreateLicenseCommandTests
 {

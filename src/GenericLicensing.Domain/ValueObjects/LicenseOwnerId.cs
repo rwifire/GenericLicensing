@@ -12,6 +12,11 @@ public class LicenseOwnerId : ValueObject
     Id = Guard.Argument(id, nameof(id)).NotEmpty().NotWhiteSpace();
   }
 
+  public override string ToString()
+  {
+    return Id;
+  }
+
   protected override IEnumerable<object> GetEqualityComponents()
   {
     yield return Id;
