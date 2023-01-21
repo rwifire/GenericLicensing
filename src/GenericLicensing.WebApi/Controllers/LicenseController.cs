@@ -64,6 +64,6 @@ public class LicenseController : ControllerBase
       return NotFound();
     }
 
-    return Ok(result);
+    return new OkObjectResult(result);
   }
 }

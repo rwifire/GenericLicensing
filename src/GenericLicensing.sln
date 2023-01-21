@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericLicensing.Domain.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericLicensing.Contracts", "GenericLicensing.Contracts\GenericLicensing.Contracts.csproj", "{F329AE0B-4514-4E39-99B5-A440D65B42F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericLicensing.WebApi.Tests", "Tests\GenericLicensing.WebApi.Tests\GenericLicensing.WebApi.Tests.csproj", "{82A2FE1A-2741-4940-AFC4-98819256F997}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,9 +48,14 @@ Global
 		{F329AE0B-4514-4E39-99B5-A440D65B42F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F329AE0B-4514-4E39-99B5-A440D65B42F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F329AE0B-4514-4E39-99B5-A440D65B42F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82A2FE1A-2741-4940-AFC4-98819256F997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A2FE1A-2741-4940-AFC4-98819256F997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A2FE1A-2741-4940-AFC4-98819256F997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A2FE1A-2741-4940-AFC4-98819256F997}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{25CCD72A-BE6B-4A00-BAC7-697FF7F5CE58} = {80BD609C-6061-4FAC-A276-918CF26E2E2F}
 		{94E90B75-652F-4F3A-B6A9-56ECC31A7752} = {B511DE42-AE91-4C4C-BDC4-1F776B93ED81}
+		{82A2FE1A-2741-4940-AFC4-98819256F997} = {B511DE42-AE91-4C4C-BDC4-1F776B93ED81}
 	EndGlobalSection
 EndGlobal
