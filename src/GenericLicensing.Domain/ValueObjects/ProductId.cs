@@ -1,4 +1,5 @@
-﻿using DDDBase.Models;
+﻿using Dawn;
+using DDDBase.Models;
 
 namespace GenericLicensing.Domain.ValueObjects;
 
@@ -6,9 +7,9 @@ public class ProductId : ValueObject
 {
   public string Id { get; private set; }
 
-  public ProductId(string productId)
+  public ProductId(string id)
   {
-    Id = productId;
+    Id = Guard.Argument(id, nameof(id)).NotEmpty().NotWhiteSpace();
   }
 
   public override string ToString()

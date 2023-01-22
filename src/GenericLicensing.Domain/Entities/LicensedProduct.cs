@@ -1,4 +1,5 @@
-﻿using GenericLicensing.Domain.ValueObjects;
+﻿using Dawn;
+using GenericLicensing.Domain.ValueObjects;
 
 namespace GenericLicensing.Domain.Entities;
 
@@ -10,6 +11,6 @@ public class LicensedProduct
   public LicensedProduct(ProductId productId, string productName)
   {
     ProductId = productId;
-    ProductName = productName;
+    ProductName = Guard.Argument(productName, nameof(productName)).NotEmpty().NotWhiteSpace();
   }
 }

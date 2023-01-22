@@ -12,30 +12,34 @@ public class CreateLicenseCommandTests
   public void CreateLicenseCommandCreation()
   {
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("123"), "Company");
+    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name");
     var validator = new CreateLicenseCommandValidator();
 
-    var command = new CreateLicenseCommand(licenseOwner, validator);
+    var command = new CreateLicenseCommand(licenseOwner, licensedProduct, validator);
 
     command.LicenseOwner.Should().Be(licenseOwner);
+    command.LicensedProduct.Should().Be(licensedProduct);
   }
 
   [Fact]
   public void CreateLicenseCommandLicenseOwnerValidation()
   {
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("123"), "Company");
+    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name");
     var validator = new CreateLicenseCommandValidator();
 
-    var command = new CreateLicenseCommand(licenseOwner, validator);
+    var command = new CreateLicenseCommand(licenseOwner, licensedProduct, validator);
 
     command.Validate().IsValid.Should().BeTrue();
   }
 
   [Fact]
-  public void CreateLicenseCommandLicenseOwnerValidationFails()
+  public void CreateLicenseCommandLicenseOwnerValidationFailsNullOwner()
   {
     LicenseOwner? licenseOwner = null;
+    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name");
     var validator = new CreateLicenseCommandValidator();
-    var command = new CreateLicenseCommand(licenseOwner!, validator);
+    var command = new CreateLicenseCommand(licenseOwner!, licensedProduct, validator);
 
     var result = command.Validate();
 
@@ -43,5 +47,23 @@ public class CreateLicenseCommandTests
     result.Errors.Count.Should().Be(1);
     result.Errors[0].ErrorCode.Should().Be(CreateLicenseCommandValidator.PropertyRequiredCode);
     result.Errors[0].ErrorMessage.Should().Be(CreateLicenseCommandValidator.PropertyRequiredMessage);
+    result.Errors[0].PropertyName.Should().Be(nameof(command.LicenseOwner));
+  }
+
+  [Fact]
+  public void CreateLicenseCommandLicenseOwnerValidationFailsNullProduct()
+  {
+    var licenseOwner = new LicenseOwner(new LicenseOwnerId("123"), "Company");
+    LicensedProduct? licensedProduct = null;
+    var validator = new CreateLicenseCommandValidator();
+    var command = new CreateLicenseCommand(licenseOwner, licensedProduct!, validator);
+
+    var result = command.Validate();
+
+    result.IsValid.Should().BeFalse();
+    result.Errors.Count.Should().Be(1);
+    result.Errors[0].ErrorCode.Should().Be(CreateLicenseCommandValidator.PropertyRequiredCode);
+    result.Errors[0].ErrorMessage.Should().Be(CreateLicenseCommandValidator.PropertyRequiredMessage);
+    result.Errors[0].PropertyName.Should().Be(nameof(command.LicensedProduct));
   }
 }

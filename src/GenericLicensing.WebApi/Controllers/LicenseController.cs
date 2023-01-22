@@ -34,7 +34,8 @@ public class LicenseController : ControllerBase
     LicenseAggregate licenseAggregate;
     try
     {
-      var command = new CreateLicenseCommand(dto.LicenseOwner.ToLicenseOwner(), new CreateLicenseCommandValidator());
+      var command = new CreateLicenseCommand(dto.LicenseOwner.ToLicenseOwner(), dto.LicensedProduct.ToLicensedProduct(),
+        new CreateLicenseCommandValidator());
       licenseAggregate = await _mediator.Send(command);
     }
     catch (ValidationException ex)
