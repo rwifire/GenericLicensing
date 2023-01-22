@@ -27,10 +27,17 @@ public class LicenseControllerTests
       {
         LicenseOwnerId = "123",
         CompanyName = "Some Company"
+      },
+      LicensedProduct = new LicensedProductDetailsDto()
+      {
+        ProductId = "222",
+        ProductName = "Super Software"
       }
     };
+
     var mediatorMock = new Mock<IMediator>();
-    var license = License.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner());
+    var license = LicenseAggregate.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner(),
+      createDto.LicensedProduct.ToLicensedProduct());
     mediatorMock.Setup(m =>
         m.Send(
           It.Is<CreateLicenseCommand>(c =>
@@ -61,10 +68,16 @@ public class LicenseControllerTests
       {
         LicenseOwnerId = "123",
         CompanyName = "Some Company"
+      },
+      LicensedProduct = new LicensedProductDetailsDto()
+      {
+        ProductId = "222",
+        ProductName = "Super Software"
       }
     };
     var mediatorMock = new Mock<IMediator>();
-    var license = License.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner());
+    var license = LicenseAggregate.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner(),
+      createDto.LicensedProduct.ToLicensedProduct());
     mediatorMock.Setup(m =>
         m.Send(
           It.Is<CreateLicenseCommand>(c =>

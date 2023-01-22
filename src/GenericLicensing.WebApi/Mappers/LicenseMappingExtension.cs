@@ -7,15 +7,15 @@ namespace GenericLicensing.WebApi.Mappers;
 
 public static class LicenseMappingExtension
 {
-  public static LicenseDetailsDto ToLicenseDetails(this License license)
+  public static LicenseDetailsDto ToLicenseDetails(this LicenseAggregate licenseAggregate)
   {
     return new LicenseDetailsDto()
     {
-      Id = license.Id.ToString(),
-      LicenseKey = license.LicenseKey.ToString(),
-      LicenseState = license.LicenseState.ToString(),
-      LicenseOwner = license.LicenseOwner.ToLicenseOwnerDetails(),
-      Version = license.Version
+      Id = licenseAggregate.Id.ToString(),
+      LicenseKey = licenseAggregate.LicenseKey.ToString(),
+      LicenseState = licenseAggregate.LicenseState.ToString(),
+      LicenseOwner = licenseAggregate.LicenseOwner.ToLicenseOwnerDetails(),
+      Version = licenseAggregate.Version
     };
   }
 
@@ -31,5 +31,19 @@ public static class LicenseMappingExtension
   public static LicenseOwner ToLicenseOwner(this LicenseOwnerDetailsDto owner)
   {
     return new LicenseOwner(new LicenseOwnerId(owner.LicenseOwnerId), owner.CompanyName);
+  }
+
+  public static LicensedProductDetailsDto ToLicensedProductDetails(this LicensedProduct product)
+  {
+    return new LicensedProductDetailsDto()
+    {
+      ProductId = product.ProductId.ToString(),
+      ProductName = product.ProductName
+    };
+  }
+
+  public static LicensedProduct ToLicensedProduct(this LicensedProductDetailsDto product)
+  {
+    return new LicensedProduct(new ProductId(product.ProductId), product.ProductName);
   }
 }

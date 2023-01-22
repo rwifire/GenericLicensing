@@ -6,7 +6,7 @@ using MediatR;
 
 namespace GenericLicensing.Domain.Commands.License;
 
-public class CreateLicenseCommand : ICommand, IRequest<Aggregates.License>
+public class CreateLicenseCommand : ICommand, IRequest<Aggregates.LicenseAggregate>
 {
   private readonly IValidator<CreateLicenseCommand> _validator;
   public LicenseOwner LicenseOwner { get; }

@@ -6,7 +6,7 @@ using GenericLicensing.Domain.ValueObjects;
 
 namespace GenericLicensing.Domain.Aggregates;
 
-public class License : BaseAggregateRoot<License>
+public class LicenseAggregate : BaseAggregateRoot<LicenseAggregate>
 {
   private Guid _id;
 
@@ -31,18 +31,24 @@ public class License : BaseAggregateRoot<License>
   public LicenseOwner LicenseOwner { get; private set; }
 
   /// <summary>
+  /// Information about the Product that this license gives usage rights to
+  /// </summary>
+  public LicensedProduct LicensedProduct { get; private set; }
+
+  /// <summary>
   /// Indicates whether this License is deleted
   /// </summary>
   public bool IsDeleted { get; private set; }
 
   //used for serialization and deserialization
-  private License()
+  private LicenseAggregate()
   {
   }
 
-  private License(Guid id, LicenseKey licenseKey, LicenseOwner licenseOwner)
+  private LicenseAggregate(Guid id, LicenseKey licenseKey, LicenseOwner licenseOwner, LicensedProduct licensedProduct)
   {
-    ApplyChange(new LicenseCreatedEvent(id, licenseKey, licenseOwner, LicenseState.Active, NextVersion()));
+    ApplyChange(new LicenseCreatedEvent(id, licenseKey, licenseOwner, licensedProduct, LicenseState.Active,
+      NextVersion()));
   }
 
   /// <summary>
@@ -59,6 +65,7 @@ public class License : BaseAggregateRoot<License>
     _id = e.AggregateId;
     LicenseKey = e.LicenseKey;
     LicenseOwner = e.LicenseOwner;
+    LicensedProduct = e.LicensedProduct;
     LicenseState = e.LicenseState;
     IsDeleted = false;
   }
@@ -71,9 +78,9 @@ public class License : BaseAggregateRoot<License>
   /// <summary>
   /// Creates a new aggregate of the type <see cref="GrantAggregate"/>
   /// </summary>
-  public static License Create(LicenseKey key, LicenseOwner owner)
+  public static LicenseAggregate Create(LicenseKey key, LicenseOwner owner, LicensedProduct licensedProduct)
   {
-    return new License(Guid.NewGuid(), key, owner);
+    return new LicenseAggregate(Guid.NewGuid(), key, owner, licensedProduct);
   }
 }
 

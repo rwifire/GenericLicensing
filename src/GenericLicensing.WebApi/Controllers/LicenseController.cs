@@ -31,11 +31,11 @@ public class LicenseController : ControllerBase
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   public async Task<IActionResult> Create(CreateLicenseDto dto)
   {
-    License license;
+    LicenseAggregate licenseAggregate;
     try
     {
       var command = new CreateLicenseCommand(dto.LicenseOwner.ToLicenseOwner(), new CreateLicenseCommandValidator());
-      license = await _mediator.Send(command);
+      licenseAggregate = await _mediator.Send(command);
     }
     catch (ValidationException ex)
     {
@@ -48,7 +48,8 @@ public class LicenseController : ControllerBase
       return BadRequest();
     }
 
-    return CreatedAtAction(nameof(GetLicense), new {id = license.Id.ToString()}, license.ToLicenseDetails());
+    return CreatedAtAction(nameof(GetLicense), new {id = licenseAggregate.Id.ToString()},
+      licenseAggregate.ToLicenseDetails());
   }
 
   [HttpGet]

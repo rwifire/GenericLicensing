@@ -14,8 +14,8 @@ public class LicenseTests
   {
     var key = new LicenseKey("some key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-
-    var license = Aggregates.License.Create(key, licenseOwner);
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Version.Should().Be(1);
     license.IsDeleted.Should().BeFalse();
@@ -23,6 +23,8 @@ public class LicenseTests
     license.LicenseState.Should().Be(LicenseState.Active);
     license.LicenseOwner.LicenseOwnerId.Should().Be(licenseOwner.LicenseOwnerId);
     license.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
+    license.LicensedProduct.ProductId.Should().Be(licensedProduct.ProductId);
+    license.LicensedProduct.ProductName.Should().Be(licensedProduct.ProductName);
   }
 
   [Fact]
@@ -31,7 +33,8 @@ public class LicenseTests
     var now = DateTime.UtcNow;
     var key = new LicenseKey("some key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var license = Aggregates.License.Create(key, licenseOwner);
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     var events = license.Events;
 
@@ -48,6 +51,8 @@ public class LicenseTests
     @event.LicenseOwner.Should().NotBeNull();
     @event.LicenseOwner.LicenseOwnerId.Should().Be(license.LicenseOwner.LicenseOwnerId);
     @event.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
+    @event.LicensedProduct.ProductId.Should().Be(licensedProduct.ProductId);
+    @event.LicensedProduct.ProductName.Should().Be(licensedProduct.ProductName);
   }
 
   [Fact]
@@ -55,7 +60,8 @@ public class LicenseTests
   {
     var key = new LicenseKey("some Key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var license = Aggregates.License.Create(key, licenseOwner);
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Delete();
 
@@ -68,7 +74,8 @@ public class LicenseTests
   {
     var key = new LicenseKey("some Key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var license = Aggregates.License.Create(key, licenseOwner);
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Delete();
 
