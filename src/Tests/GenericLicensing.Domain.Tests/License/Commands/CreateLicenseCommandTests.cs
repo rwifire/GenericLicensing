@@ -12,7 +12,9 @@ public class CreateLicenseCommandTests
   public void CreateLicenseCommandCreation()
   {
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("123"), "Company");
-    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name");
+    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
+      new Dictionary<string, string>());
+    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name", prodAttributes);
     var validator = new CreateLicenseCommandValidator();
 
     var command = new CreateLicenseCommand(licenseOwner, licensedProduct, validator);
@@ -25,7 +27,9 @@ public class CreateLicenseCommandTests
   public void CreateLicenseCommandLicenseOwnerValidation()
   {
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("123"), "Company");
-    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name");
+    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
+      new Dictionary<string, string>());
+    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name", prodAttributes);
     var validator = new CreateLicenseCommandValidator();
 
     var command = new CreateLicenseCommand(licenseOwner, licensedProduct, validator);
@@ -37,7 +41,9 @@ public class CreateLicenseCommandTests
   public void CreateLicenseCommandLicenseOwnerValidationFailsNullOwner()
   {
     LicenseOwner? licenseOwner = null;
-    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name");
+    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
+      new Dictionary<string, string>());
+    var licensedProduct = new LicensedProduct(new ProductId("222"), "Prod Name", prodAttributes);
     var validator = new CreateLicenseCommandValidator();
     var command = new CreateLicenseCommand(licenseOwner!, licensedProduct, validator);
 

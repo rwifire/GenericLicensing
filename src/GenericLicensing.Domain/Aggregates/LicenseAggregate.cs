@@ -36,6 +36,11 @@ public class LicenseAggregate : BaseAggregateRoot<LicenseAggregate>
   public LicensedProduct LicensedProduct { get; private set; }
 
   /// <summary>
+  /// Time when this license was created
+  /// </summary>
+  public DateTime CreationDate { get; private set; }
+
+  /// <summary>
   /// Indicates whether this License is deleted
   /// </summary>
   public bool IsDeleted { get; private set; }
@@ -68,6 +73,7 @@ public class LicenseAggregate : BaseAggregateRoot<LicenseAggregate>
     LicensedProduct = e.LicensedProduct;
     LicenseState = e.LicenseState;
     IsDeleted = false;
+    CreationDate = e.Timestamp;
   }
 
   private void Apply(LicenseDeletedEvent e)

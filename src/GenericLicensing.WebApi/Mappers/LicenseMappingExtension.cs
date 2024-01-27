@@ -38,12 +38,25 @@ public static class LicenseMappingExtension
     return new LicensedProductDetailsDto()
     {
       ProductId = product.ProductId.ToString(),
-      ProductName = product.ProductName
+      ProductName = product.ProductName,
+      ProductAttributes = product.Attributes.ToProductAttributesDto()
+    };
+  }
+
+  public static ProductAttributesDto ToProductAttributesDto(this ProductAttributes attributes)
+  {
+    return new ProductAttributesDto()
+    {
+      Flags = attributes.Flags,
+      Options = attributes.Options,
+      Configs = attributes.Configs
     };
   }
 
   public static LicensedProduct ToLicensedProduct(this LicensedProductDetailsDto product)
   {
-    return new LicensedProduct(new ProductId(product.ProductId), product.ProductName);
+    var attributes = new ProductAttributes(product.ProductAttributes.Flags, product.ProductAttributes.Options,
+      product.ProductAttributes.Configs);
+    return new LicensedProduct(new ProductId(product.ProductId), product.ProductName, attributes);
   }
 }

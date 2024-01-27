@@ -15,7 +15,6 @@ public class LicenseOwner
   /// </summary>
   public string CompanyName { get; private set; }
 
-
   public LicenseOwner(LicenseOwnerId id, string companyName)
   {
     LicenseOwnerId = id;

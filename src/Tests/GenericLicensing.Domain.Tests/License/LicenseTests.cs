@@ -14,7 +14,10 @@ public class LicenseTests
   {
     var key = new LicenseKey("some key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
+      new Dictionary<string, string>());
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
+    var now = DateTime.UtcNow;
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Version.Should().Be(1);
@@ -25,6 +28,7 @@ public class LicenseTests
     license.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
     license.LicensedProduct.ProductId.Should().Be(licensedProduct.ProductId);
     license.LicensedProduct.ProductName.Should().Be(licensedProduct.ProductName);
+    license.CreationDate.Should().BeWithin(TimeSpan.FromMilliseconds(500)).After(now);
   }
 
   [Fact]
@@ -33,7 +37,9 @@ public class LicenseTests
     var now = DateTime.UtcNow;
     var key = new LicenseKey("some key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
+      new Dictionary<string, string>());
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     var events = license.Events;
@@ -53,6 +59,7 @@ public class LicenseTests
     @event.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
     @event.LicensedProduct.ProductId.Should().Be(licensedProduct.ProductId);
     @event.LicensedProduct.ProductName.Should().Be(licensedProduct.ProductName);
+    @event.Timestamp.Should().Be(license.CreationDate);
   }
 
   [Fact]
@@ -60,7 +67,9 @@ public class LicenseTests
   {
     var key = new LicenseKey("some Key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
+      new Dictionary<string, string>());
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Delete();
@@ -74,7 +83,9 @@ public class LicenseTests
   {
     var key = new LicenseKey("some Key");
     var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name");
+    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
+      new Dictionary<string, string>());
+    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Delete();
