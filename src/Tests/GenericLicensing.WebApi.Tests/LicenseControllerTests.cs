@@ -31,7 +31,13 @@ public class LicenseControllerTests
       LicensedProduct = new LicensedProductDetailsDto()
       {
         ProductId = "222",
-        ProductName = "Super Software"
+        ProductName = "Super Software",
+        ProductAttributes = new ProductAttributesDto()
+        {
+          Flags = new Dictionary<string, bool>(),
+          Options = new Dictionary<string, int>(),
+          Configs = new Dictionary<string, string>()
+        }
       }
     };
 
@@ -72,7 +78,13 @@ public class LicenseControllerTests
       LicensedProduct = new LicensedProductDetailsDto()
       {
         ProductId = "222",
-        ProductName = "Super Software"
+        ProductName = "Super Software",
+        ProductAttributes = new ProductAttributesDto()
+        {
+          Flags = new Dictionary<string, bool>(),
+          Options = new Dictionary<string, int>(),
+          Configs = new Dictionary<string, string>()
+        }
       }
     };
     var mediatorMock = new Mock<IMediator>();
