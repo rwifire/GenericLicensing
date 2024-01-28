@@ -6,7 +6,7 @@ namespace GenericLicensing.Domain.Entities;
 /// <summary>
 /// Product Information that is licensed
 /// </summary>
-public class LicensedProduct
+public class Product
 {
   /// <summary>
   /// ID of the product (product number or similar)
@@ -20,7 +20,7 @@ public class LicensedProduct
 
   public ProductAttributes Attributes { get; set; }
 
-  public LicensedProduct(ProductId productId, string productName, ProductAttributes attributes)
+  public Product(ProductId productId, string productName, ProductAttributes attributes)
   {
     ProductId = Guard.Argument(productId, nameof(productId)).NotNull();
     Attributes = Guard.Argument(attributes, nameof(attributes)).NotNull();

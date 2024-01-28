@@ -4,6 +4,7 @@ using GenericLicensing.Domain.Entities;
 using GenericLicensing.Domain.Events;
 using GenericLicensing.Domain.Events.License;
 using GenericLicensing.Domain.ValueObjects;
+using GenericLicensing.TestUtils;
 
 namespace GenericLicensing.Domain.Tests.License;
 
@@ -13,10 +14,8 @@ public class LicenseTests
   public void CreateLicenseCausesCorrectChange()
   {
     var key = new LicenseKey("some key");
-    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
-      new Dictionary<string, string>());
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
+    var licenseOwner = LicenseOwnerTestModel.CreateLicenseOwner();
+    var licensedProduct = ProductTestModel.CreateProduct();
     var now = DateTime.UtcNow;
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
@@ -26,8 +25,8 @@ public class LicenseTests
     license.LicenseState.Should().Be(LicenseState.Active);
     license.LicenseOwner.LicenseOwnerId.Should().Be(licenseOwner.LicenseOwnerId);
     license.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
-    license.LicensedProduct.ProductId.Should().Be(licensedProduct.ProductId);
-    license.LicensedProduct.ProductName.Should().Be(licensedProduct.ProductName);
+    license.Product.ProductId.Should().Be(licensedProduct.ProductId);
+    license.Product.ProductName.Should().Be(licensedProduct.ProductName);
     license.CreationDate.Should().BeWithin(TimeSpan.FromMilliseconds(500)).After(now);
   }
 
@@ -36,10 +35,8 @@ public class LicenseTests
   {
     var now = DateTime.UtcNow;
     var key = new LicenseKey("some key");
-    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
-      new Dictionary<string, string>());
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
+    var licenseOwner = LicenseOwnerTestModel.CreateLicenseOwner();
+    var licensedProduct = ProductTestModel.CreateProduct();
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     var events = license.Events;
@@ -57,8 +54,8 @@ public class LicenseTests
     @event.LicenseOwner.Should().NotBeNull();
     @event.LicenseOwner.LicenseOwnerId.Should().Be(license.LicenseOwner.LicenseOwnerId);
     @event.LicenseOwner.CompanyName.Should().Be(license.LicenseOwner.CompanyName);
-    @event.LicensedProduct.ProductId.Should().Be(licensedProduct.ProductId);
-    @event.LicensedProduct.ProductName.Should().Be(licensedProduct.ProductName);
+    @event.Product.ProductId.Should().Be(licensedProduct.ProductId);
+    @event.Product.ProductName.Should().Be(licensedProduct.ProductName);
     @event.Timestamp.Should().Be(license.CreationDate);
   }
 
@@ -66,10 +63,8 @@ public class LicenseTests
   public void DeleteLicenseCausesCorrectChange()
   {
     var key = new LicenseKey("some Key");
-    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
-      new Dictionary<string, string>());
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
+    var licenseOwner = LicenseOwnerTestModel.CreateLicenseOwner();
+    var licensedProduct = ProductTestModel.CreateProduct();
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Delete();
@@ -82,10 +77,8 @@ public class LicenseTests
   public void DeleteLicenseCausesCorrectEvent()
   {
     var key = new LicenseKey("some Key");
-    var licenseOwner = new LicenseOwner(new LicenseOwnerId("some Owner"), "Some Company");
-    var prodAttributes = new ProductAttributes(new Dictionary<string, bool>(), new Dictionary<string, int>(),
-      new Dictionary<string, string>());
-    var licensedProduct = new LicensedProduct(new ProductId("Some Product"), "Some Product Name", prodAttributes);
+    var licenseOwner = LicenseOwnerTestModel.CreateLicenseOwner();
+    var licensedProduct = ProductTestModel.CreateProduct();
     var license = LicenseAggregate.Create(key, licenseOwner, licensedProduct);
 
     license.Delete();

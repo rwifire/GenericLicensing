@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericLicensing.Contracts"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericLicensing.WebApi.Tests", "Tests\GenericLicensing.WebApi.Tests\GenericLicensing.WebApi.Tests.csproj", "{82A2FE1A-2741-4940-AFC4-98819256F997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genericlicensing.TestUtils", "Tests\Genericlicensing.TestUtils\Genericlicensing.TestUtils.csproj", "{591A2EA5-9CF8-4106-82BE-EE241C26B637}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericLicensing.TestUtils", "Tests\GenericLicensing.TestUtils\GenericLicensing.TestUtils.csproj", "{C4D49F33-09F2-402D-A6C2-F95D1D5F8E2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,15 +54,15 @@ Global
 		{82A2FE1A-2741-4940-AFC4-98819256F997}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82A2FE1A-2741-4940-AFC4-98819256F997}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82A2FE1A-2741-4940-AFC4-98819256F997}.Release|Any CPU.Build.0 = Release|Any CPU
-		{591A2EA5-9CF8-4106-82BE-EE241C26B637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{591A2EA5-9CF8-4106-82BE-EE241C26B637}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{591A2EA5-9CF8-4106-82BE-EE241C26B637}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{591A2EA5-9CF8-4106-82BE-EE241C26B637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D49F33-09F2-402D-A6C2-F95D1D5F8E2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D49F33-09F2-402D-A6C2-F95D1D5F8E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D49F33-09F2-402D-A6C2-F95D1D5F8E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D49F33-09F2-402D-A6C2-F95D1D5F8E2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{25CCD72A-BE6B-4A00-BAC7-697FF7F5CE58} = {80BD609C-6061-4FAC-A276-918CF26E2E2F}
 		{94E90B75-652F-4F3A-B6A9-56ECC31A7752} = {B511DE42-AE91-4C4C-BDC4-1F776B93ED81}
 		{82A2FE1A-2741-4940-AFC4-98819256F997} = {B511DE42-AE91-4C4C-BDC4-1F776B93ED81}
-		{591A2EA5-9CF8-4106-82BE-EE241C26B637} = {B511DE42-AE91-4C4C-BDC4-1F776B93ED81}
+		{C4D49F33-09F2-402D-A6C2-F95D1D5F8E2B} = {B511DE42-AE91-4C4C-BDC4-1F776B93ED81}
 	EndGlobalSection
 EndGlobal

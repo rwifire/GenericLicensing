@@ -28,7 +28,7 @@ public class LicenseControllerTests
         LicenseOwnerId = "123",
         CompanyName = "Some Company"
       },
-      LicensedProduct = new LicensedProductDetailsDto()
+      Product = new ProductDetailsDto()
       {
         ProductId = "222",
         ProductName = "Super Software",
@@ -43,7 +43,7 @@ public class LicenseControllerTests
 
     var mediatorMock = new Mock<IMediator>();
     var license = LicenseAggregate.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner(),
-      createDto.LicensedProduct.ToLicensedProduct());
+      createDto.Product.ToLicensedProduct());
     mediatorMock.Setup(m =>
         m.Send(
           It.Is<CreateLicenseCommand>(c =>
@@ -75,7 +75,7 @@ public class LicenseControllerTests
         LicenseOwnerId = "123",
         CompanyName = "Some Company"
       },
-      LicensedProduct = new LicensedProductDetailsDto()
+      Product = new ProductDetailsDto()
       {
         ProductId = "222",
         ProductName = "Super Software",
@@ -89,7 +89,7 @@ public class LicenseControllerTests
     };
     var mediatorMock = new Mock<IMediator>();
     var license = LicenseAggregate.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner(),
-      createDto.LicensedProduct.ToLicensedProduct());
+      createDto.Product.ToLicensedProduct());
     mediatorMock.Setup(m =>
         m.Send(
           It.Is<CreateLicenseCommand>(c =>
@@ -138,6 +138,17 @@ public class LicenseControllerTests
       {
         CompanyName = "Some Company",
         LicenseOwnerId = "Some ID"
+      },
+      Product = new ProductDetailsDto()
+      {
+        ProductId = "454575",
+        ProductName = "Super Solution",
+        ProductAttributes = new ProductAttributesDto()
+        {
+          Flags = new Dictionary<string, bool>(),
+          Options = new Dictionary<string, int>(),
+          Configs = new Dictionary<string, string>()
+        }
       },
       LicenseState = LicenseState.Active.ToString(),
       Version = 1

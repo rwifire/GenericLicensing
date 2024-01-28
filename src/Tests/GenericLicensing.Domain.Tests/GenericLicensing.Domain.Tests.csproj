@@ -27,6 +27,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\GenericLicensing.Domain\GenericLicensing.Domain.csproj"/>
+        <ProjectReference Include="..\GenericLicensing.TestUtils\GenericLicensing.TestUtils.csproj"/>
     </ItemGroup>
 
 </Project>

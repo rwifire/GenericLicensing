@@ -12,5 +12,7 @@ public class LicenseDetailsDto
 
   [Required] public LicenseOwnerDetailsDto LicenseOwner { get; set; }
 
+  [Required] public ProductDetailsDto Product { get; set; }
+
   [Required] public long Version { get; set; }
 }

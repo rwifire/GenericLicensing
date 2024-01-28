@@ -34,7 +34,7 @@ public class LicenseController : ControllerBase
     LicenseAggregate licenseAggregate;
     try
     {
-      var command = new CreateLicenseCommand(dto.LicenseOwner.ToLicenseOwner(), dto.LicensedProduct.ToLicensedProduct(),
+      var command = new CreateLicenseCommand(dto.LicenseOwner.ToLicenseOwner(), dto.Product.ToLicensedProduct(),
         new CreateLicenseCommandValidator());
       licenseAggregate = await _mediator.Send(command);
     }

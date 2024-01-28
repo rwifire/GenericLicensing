@@ -10,14 +10,14 @@ public class CreateLicenseCommand : ICommand, IRequest<Aggregates.LicenseAggrega
 {
   private readonly IValidator<CreateLicenseCommand> _validator;
   public LicenseOwner LicenseOwner { get; }
-  public LicensedProduct LicensedProduct { get; }
+  public Product Product { get; }
 
-  public CreateLicenseCommand(LicenseOwner licenseOwner, LicensedProduct licensedProduct,
+  public CreateLicenseCommand(LicenseOwner licenseOwner, Product product,
     IValidator<CreateLicenseCommand> validator)
   {
     _validator = validator;
     LicenseOwner = licenseOwner;
-    LicensedProduct = licensedProduct;
+    Product = product;
   }
 
   public ValidationResult Validate()

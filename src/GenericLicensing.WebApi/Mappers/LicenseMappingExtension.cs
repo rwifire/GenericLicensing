@@ -15,6 +15,7 @@ public static class LicenseMappingExtension
       LicenseKey = licenseAggregate.LicenseKey.ToString(),
       LicenseState = licenseAggregate.LicenseState.ToString(),
       LicenseOwner = licenseAggregate.LicenseOwner.ToLicenseOwnerDetails(),
+      Product = licenseAggregate.Product.ToProductDetails(),
       Version = licenseAggregate.Version
     };
   }
@@ -33,9 +34,9 @@ public static class LicenseMappingExtension
     return new LicenseOwner(new LicenseOwnerId(owner.LicenseOwnerId), owner.CompanyName);
   }
 
-  public static LicensedProductDetailsDto ToLicensedProductDetails(this LicensedProduct product)
+  public static ProductDetailsDto ToProductDetails(this Product product)
   {
-    return new LicensedProductDetailsDto()
+    return new ProductDetailsDto()
     {
       ProductId = product.ProductId.ToString(),
       ProductName = product.ProductName,
@@ -53,10 +54,10 @@ public static class LicenseMappingExtension
     };
   }
 
-  public static LicensedProduct ToLicensedProduct(this LicensedProductDetailsDto product)
+  public static Product ToLicensedProduct(this ProductDetailsDto product)
   {
     var attributes = new ProductAttributes(product.ProductAttributes.Flags, product.ProductAttributes.Options,
       product.ProductAttributes.Configs);
-    return new LicensedProduct(new ProductId(product.ProductId), product.ProductName, attributes);
+    return new Product(new ProductId(product.ProductId), product.ProductName, attributes);
   }
 }
