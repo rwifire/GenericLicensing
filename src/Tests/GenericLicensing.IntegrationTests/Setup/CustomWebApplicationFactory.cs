@@ -30,9 +30,6 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
       {
         var scopedServices = scope.ServiceProvider;
         var db = scopedServices.GetRequiredService<GenericLicenseDbContext>();
-        var logger = scopedServices
-          .GetRequiredService<ILogger<CustomWebApplicationFactory<Program>>>();
-
         db.Database.EnsureCreated();
       }
     });
