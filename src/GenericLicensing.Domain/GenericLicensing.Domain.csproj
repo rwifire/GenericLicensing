@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\DDDBase\DDDBase.csproj"/>
-        <ProjectReference Include="..\GenericLicensing.Contracts\GenericLicensing.Contracts.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -4,7 +4,7 @@ namespace GenericLicensing.Contracts.LicenseDtos;
 
 public class LicenseOwnerDetailsDto
 {
-  [Required] public string LicenseOwnerId { get; set; }
+  [Required] public required string LicenseOwnerId { get; set; }
 
-  [Required] public string CompanyName { get; set; }
+  [Required] public required string CompanyName { get; set; }
 }

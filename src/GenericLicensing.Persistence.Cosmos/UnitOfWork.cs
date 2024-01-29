@@ -1,4 +1,6 @@
-﻿namespace GenericLicensing.Persistence.Cosmos;
+﻿using GenericLicensing.Contracts.Persistence;
+
+namespace GenericLicensing.Persistence.Cosmos;
 
 public class UnitOfWork : IDisposable, IUnitOfWork
 {
@@ -38,11 +40,4 @@ public class UnitOfWork : IDisposable, IUnitOfWork
   }
 
   #endregion
-}
-
-public interface IUnitOfWork
-{
-  Task SaveChangesAsync(CancellationToken ct = default);
-
-  void Dispose();
 }

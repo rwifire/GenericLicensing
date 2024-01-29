@@ -1,4 +1,5 @@
 ﻿using DDDBase.Cqrs;
+using GenericLicensing.Contracts.Persistence;
 using GenericLicensing.Persistence.Cosmos;
 using MediatR;
 

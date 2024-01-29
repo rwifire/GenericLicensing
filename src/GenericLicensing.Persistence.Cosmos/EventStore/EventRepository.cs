@@ -3,6 +3,7 @@ using DDDBase.Cqrs;
 using DDDBase.Models;
 using FluentValidation;
 using FluentValidation.Results;
+using GenericLicensing.Contracts.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -65,7 +66,7 @@ public class EventRepository<TA> : IEventRepository<TA>
         var data = _eventSerializer.Serialize(@event);
         var eventType = @event.GetType();
         var eventData = EventData.Create(aggregateRoot.Id, aggregateRoot.Version,
-          eventType.AssemblyQualifiedName, data);
+          eventType.AssemblyQualifiedName ?? throw new InvalidOperationException(), data);
         await _dbContext.Events.AddAsync(eventData);
       }
     }

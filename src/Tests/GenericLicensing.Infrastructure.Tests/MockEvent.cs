@@ -8,6 +8,7 @@ public class MockEvent : BaseDomainEvent
 
   private MockEvent()
   {
+    WhatsDone = "";
   }
 
   public MockEvent(Guid dId, string whatsDone, long version) : base(dId, version)

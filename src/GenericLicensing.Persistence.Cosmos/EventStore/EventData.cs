@@ -8,9 +8,9 @@ public class EventData
 
   public long AggregateVersion { get; set; }
 
-  public string Type { get; set; }
+  public required string Type { get; set; }
 
-  public byte[] Data { get; set; }
+  public required byte[] Data { get; set; }
 
 
   public static EventData Create(Guid aggregateId, long aggregateVersion, string type, byte[] data)

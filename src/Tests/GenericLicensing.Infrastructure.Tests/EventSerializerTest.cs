@@ -25,7 +25,7 @@ public class EventSerializerTest
     var expectedEvent = _event;
     var sut = new EventSerializer(new[] {typeof(MockEvent).Assembly});
 
-    var @event = sut.Deserialize(typeof(MockEvent).FullName, _data);
+    var @event = sut.Deserialize(typeof(MockEvent).FullName!, _data);
 
     @event.Should().BeOfType<MockEvent>();
     @event.Should().BeEquivalentTo(expectedEvent);
@@ -57,10 +57,10 @@ public class EventSerializerTest
   public void Deserialize_gets_type_from_cache()
   {
     var expectedEvent = _event;
-    new EventSerializer(new[] {typeof(MockEvent).Assembly}).Deserialize(typeof(MockEvent).FullName, _data);
+    new EventSerializer(new[] {typeof(MockEvent).Assembly}).Deserialize(typeof(MockEvent).FullName!, _data);
     var sut = new EventSerializer(A.Fake<IEnumerable<Assembly>>());
 
-    var @event = sut.Deserialize(typeof(MockEvent).FullName, _data);
+    var @event = sut.Deserialize(typeof(MockEvent).FullName!, _data);
 
     @event.Should().BeEquivalentTo(expectedEvent);
   }

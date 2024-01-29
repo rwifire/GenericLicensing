@@ -1,5 +1,6 @@
 ﻿using DDDBase.Cqrs;
 using DDDBase.Models;
+using GenericLicensing.Contracts.Persistence;
 using Microsoft.Extensions.Logging;
 
 namespace GenericLicensing.Application.Eventing;

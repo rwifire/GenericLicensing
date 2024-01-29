@@ -19,7 +19,10 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
         d => d.ServiceType ==
              typeof(DbContextOptions<GenericLicenseDbContext>));
 
-      services.Remove(descriptor);
+      if (descriptor != null)
+      {
+        services.Remove(descriptor);
+      }
 
       services.AddDbContext<GenericLicenseDbContext>(
         options => { options.UseInMemoryDatabase("InMemoryDbForTesting"); });
