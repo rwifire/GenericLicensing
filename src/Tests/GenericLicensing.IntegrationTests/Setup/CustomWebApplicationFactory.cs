@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using GenericLicensing.Persistence.Cosmos;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -11,27 +13,28 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
 
   protected override void ConfigureWebHost(IWebHostBuilder builder)
   {
-    // builder.ConfigureServices(services =>
-    // {
-    //   var descriptor = services.SingleOrDefault(
-    //     d => d.ServiceType ==
-    //          typeof(DbContextOptions<LicenseDbContext>));
-    //
-    //   services.Remove(descriptor);
-    //
-    //   services.AddDbContext<LicenseDbContext>(options => { options.UseInMemoryDatabase("InMemoryDbForTesting"); });
-    //
-    //   _sp = services.BuildServiceProvider();
-    //
-    //   using (var scope = _sp.CreateScope())
-    //   {
-    //     var scopedServices = scope.ServiceProvider;
-    //     var db = scopedServices.GetRequiredService<LicenseDbContext>();
-    //     var logger = scopedServices
-    //       .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
-    //
-    //     db.Database.EnsureCreated();
-    //   }
-    // });
+    builder.ConfigureServices(services =>
+    {
+      var descriptor = services.SingleOrDefault(
+        d => d.ServiceType ==
+             typeof(DbContextOptions<GenericLicenseDbContext>));
+
+      services.Remove(descriptor);
+
+      services.AddDbContext<GenericLicenseDbContext>(
+        options => { options.UseInMemoryDatabase("InMemoryDbForTesting"); });
+
+      _sp = services.BuildServiceProvider();
+
+      using (var scope = _sp.CreateScope())
+      {
+        var scopedServices = scope.ServiceProvider;
+        var db = scopedServices.GetRequiredService<GenericLicenseDbContext>();
+        var logger = scopedServices
+          .GetRequiredService<ILogger<CustomWebApplicationFactory<Program>>>();
+
+        db.Database.EnsureCreated();
+      }
+    });
   }
 }
