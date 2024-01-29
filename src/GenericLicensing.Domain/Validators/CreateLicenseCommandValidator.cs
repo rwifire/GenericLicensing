@@ -11,6 +11,6 @@ public class CreateLicenseCommandValidator : AbstractValidator<CreateLicenseComm
   public CreateLicenseCommandValidator()
   {
     RuleFor(x => x.LicenseOwner).NotNull().WithMessage(PropertyRequiredMessage).WithErrorCode(PropertyRequiredCode);
-    RuleFor(x => x.LicensedProduct).NotNull().WithMessage(PropertyRequiredMessage).WithErrorCode(PropertyRequiredCode);
+    RuleFor(x => x.Product).NotNull().WithMessage(PropertyRequiredMessage).WithErrorCode(PropertyRequiredCode);
   }
 }

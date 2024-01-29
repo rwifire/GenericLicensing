@@ -1,3 +1,4 @@
+using FakeItEasy;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
@@ -5,14 +6,13 @@ using GenericLicensing.Contracts.LicenseDtos;
 using GenericLicensing.Domain.Aggregates;
 using GenericLicensing.Domain.Commands.License;
 using GenericLicensing.Domain.Entities;
-using GenericLicensing.Domain.Queries;
 using GenericLicensing.Domain.ValueObjects;
 using GenericLicensing.WebApi.Controllers;
 using GenericLicensing.WebApi.Mappers;
+using GenericLicensing.WebApi.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
-using Moq;
 
 namespace GenericLicensing.WebApi.Tests;
 
@@ -28,7 +28,7 @@ public class LicenseControllerTests
         LicenseOwnerId = "123",
         CompanyName = "Some Company"
       },
-      LicensedProduct = new LicensedProductDetailsDto()
+      Product = new ProductDetailsDto()
       {
         ProductId = "222",
         ProductName = "Super Software",
@@ -41,17 +41,16 @@ public class LicenseControllerTests
       }
     };
 
-    var mediatorMock = new Mock<IMediator>();
+    var mediatorMock = A.Fake<IMediator>();
     var license = LicenseAggregate.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner(),
-      createDto.LicensedProduct.ToLicensedProduct());
-    mediatorMock.Setup(m =>
-        m.Send(
-          It.Is<CreateLicenseCommand>(c =>
-            c.LicenseOwner.LicenseOwnerId.ToString() == createDto.LicenseOwner.LicenseOwnerId &&
-            c.LicenseOwner.CompanyName == createDto.LicenseOwner.CompanyName),
-          It.IsAny<CancellationToken>()))
-      .ReturnsAsync(license);
-    var controller = new LicenseController(mediatorMock.Object, NullLogger<LicenseController>.Instance);
+      createDto.Product.ToLicensedProduct());
+    A.CallTo(() => mediatorMock.Send(
+        A<CreateLicenseCommand>.That.Matches(c =>
+          c.LicenseOwner.LicenseOwnerId.ToString() == createDto.LicenseOwner.LicenseOwnerId &&
+          c.LicenseOwner.CompanyName == createDto.LicenseOwner.CompanyName), A<CancellationToken>._))
+      .Returns(Task.FromResult(license));
+
+    var controller = new LicenseController(mediatorMock, NullLogger<LicenseController>.Instance);
 
     var result = await controller.Create(createDto);
 
@@ -75,7 +74,7 @@ public class LicenseControllerTests
         LicenseOwnerId = "123",
         CompanyName = "Some Company"
       },
-      LicensedProduct = new LicensedProductDetailsDto()
+      Product = new ProductDetailsDto()
       {
         ProductId = "222",
         ProductName = "Super Software",
@@ -87,20 +86,16 @@ public class LicenseControllerTests
         }
       }
     };
-    var mediatorMock = new Mock<IMediator>();
-    var license = LicenseAggregate.Create(new LicenseKey("Some KEy"), createDto.LicenseOwner.ToLicenseOwner(),
-      createDto.LicensedProduct.ToLicensedProduct());
-    mediatorMock.Setup(m =>
-        m.Send(
-          It.Is<CreateLicenseCommand>(c =>
-            c.LicenseOwner.LicenseOwnerId.ToString() == createDto.LicenseOwner.LicenseOwnerId &&
-            c.LicenseOwner.CompanyName == createDto.LicenseOwner.CompanyName),
-          It.IsAny<CancellationToken>()))
+    var mediatorMock = A.Fake<IMediator>();
+    A.CallTo(() => mediatorMock.Send(
+        A<CreateLicenseCommand>.That.Matches(c =>
+          c.LicenseOwner.LicenseOwnerId.ToString() == createDto.LicenseOwner.LicenseOwnerId &&
+          c.LicenseOwner.CompanyName == createDto.LicenseOwner.CompanyName), A<CancellationToken>._))
       .ThrowsAsync(new ValidationException(
         "Error",
         new ValidationFailure[] {new("someProp", "Some Message")}));
 
-    var controller = new LicenseController(mediatorMock.Object, NullLogger<LicenseController>.Instance);
+    var controller = new LicenseController(mediatorMock, NullLogger<LicenseController>.Instance);
 
     var result = await controller.Create(createDto);
 
@@ -113,10 +108,11 @@ public class LicenseControllerTests
   public async void GetNotFound()
   {
     var licenseId = Guid.NewGuid();
-    var mediatorMock = new Mock<IMediator>();
-    var controller = new LicenseController(mediatorMock.Object, NullLogger<LicenseController>.Instance);
-    mediatorMock.Setup(m => m.Send(It.IsAny<LicenseByIdQuery>(), It.IsAny<CancellationToken>()))
-      .ReturnsAsync(() => null);
+    var mediatorMock = A.Fake<IMediator>();
+    var controller = new LicenseController(mediatorMock, NullLogger<LicenseController>.Instance);
+    LicenseDetailsDto? returnValue = null;
+    A.CallTo(() => mediatorMock.Send(A<LicenseByIdQuery>._, A<CancellationToken>._))
+      .Returns(Task.FromResult(returnValue));
 
     var result = await controller.GetLicense(licenseId);
 
@@ -128,8 +124,8 @@ public class LicenseControllerTests
   public async void GetFindsResult()
   {
     var licenseId = Guid.NewGuid();
-    var mediatorMock = new Mock<IMediator>();
-    var controller = new LicenseController(mediatorMock.Object, NullLogger<LicenseController>.Instance);
+    var mediatorMock = A.Fake<IMediator>();
+    var controller = new LicenseController(mediatorMock, NullLogger<LicenseController>.Instance);
     var dataMock = new LicenseDetailsDto()
     {
       Id = licenseId.ToString(),
@@ -139,13 +135,24 @@ public class LicenseControllerTests
         CompanyName = "Some Company",
         LicenseOwnerId = "Some ID"
       },
+      Product = new ProductDetailsDto()
+      {
+        ProductId = "454575",
+        ProductName = "Super Solution",
+        ProductAttributes = new ProductAttributesDto()
+        {
+          Flags = new Dictionary<string, bool>(),
+          Options = new Dictionary<string, int>(),
+          Configs = new Dictionary<string, string>()
+        }
+      },
       LicenseState = LicenseState.Active.ToString(),
       Version = 1
     };
 
-    mediatorMock.Setup(m => m.Send(It.Is<LicenseByIdQuery>(
-        q => q.Id == licenseId), It.IsAny<CancellationToken>()))
-      .ReturnsAsync(dataMock);
+    A.CallTo(() => mediatorMock.Send(
+      A<LicenseByIdQuery>.That.Matches(
+        q => q.Id == licenseId), A<CancellationToken>._))!.Returns(Task.FromResult(dataMock));
 
     var result = await controller.GetLicense(licenseId);
 

@@ -1,7 +1,7 @@
 ﻿using GenericLicensing.Contracts.LicenseDtos;
 using MediatR;
 
-namespace GenericLicensing.Domain.Queries;
+namespace GenericLicensing.WebApi.Queries;
 
 public class LicenseByIdQuery : IRequest<LicenseDetailsDto?>
 {

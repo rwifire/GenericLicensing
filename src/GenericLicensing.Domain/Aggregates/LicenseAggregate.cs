@@ -33,7 +33,7 @@ public class LicenseAggregate : BaseAggregateRoot<LicenseAggregate>
   /// <summary>
   /// Information about the Product that this license gives usage rights to
   /// </summary>
-  public LicensedProduct LicensedProduct { get; private set; }
+  public Product Product { get; private set; }
 
   /// <summary>
   /// Time when this license was created
@@ -50,9 +50,9 @@ public class LicenseAggregate : BaseAggregateRoot<LicenseAggregate>
   {
   }
 
-  private LicenseAggregate(Guid id, LicenseKey licenseKey, LicenseOwner licenseOwner, LicensedProduct licensedProduct)
+  private LicenseAggregate(Guid id, LicenseKey licenseKey, LicenseOwner licenseOwner, Product product)
   {
-    ApplyChange(new LicenseCreatedEvent(id, licenseKey, licenseOwner, licensedProduct, LicenseState.Active,
+    ApplyChange(new LicenseCreatedEvent(id, licenseKey, licenseOwner, product, LicenseState.Active,
       NextVersion()));
   }
 
@@ -70,7 +70,7 @@ public class LicenseAggregate : BaseAggregateRoot<LicenseAggregate>
     _id = e.AggregateId;
     LicenseKey = e.LicenseKey;
     LicenseOwner = e.LicenseOwner;
-    LicensedProduct = e.LicensedProduct;
+    Product = e.Product;
     LicenseState = e.LicenseState;
     IsDeleted = false;
     CreationDate = e.Timestamp;
@@ -84,9 +84,9 @@ public class LicenseAggregate : BaseAggregateRoot<LicenseAggregate>
   /// <summary>
   /// Creates a new aggregate of the type <see cref="GrantAggregate"/>
   /// </summary>
-  public static LicenseAggregate Create(LicenseKey key, LicenseOwner owner, LicensedProduct licensedProduct)
+  public static LicenseAggregate Create(LicenseKey key, LicenseOwner owner, Product product)
   {
-    return new LicenseAggregate(Guid.NewGuid(), key, owner, licensedProduct);
+    return new LicenseAggregate(Guid.NewGuid(), key, owner, product);
   }
 }
 

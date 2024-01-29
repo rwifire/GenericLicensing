@@ -9,17 +9,17 @@ public class LicenseCreatedEvent : BaseDomainEvent
 {
   public LicenseKey LicenseKey { get; }
   public LicenseOwner LicenseOwner { get; }
-  public LicensedProduct LicensedProduct { get; }
+  public Product Product { get; }
   public LicenseState LicenseState { get; }
 
-  public LicenseCreatedEvent(Guid id, LicenseKey licenseKey, LicenseOwner licenseOwner, LicensedProduct licensedProduct,
+  public LicenseCreatedEvent(Guid id, LicenseKey licenseKey, LicenseOwner licenseOwner, Product product,
     LicenseState licenseState,
     long version) : base(id,
     version)
   {
     LicenseKey = licenseKey;
     LicenseOwner = licenseOwner;
-    LicensedProduct = licensedProduct;
+    Product = product;
     LicenseState = licenseState;
   }
 }

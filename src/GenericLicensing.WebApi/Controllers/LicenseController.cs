@@ -2,9 +2,9 @@
 using GenericLicensing.Contracts.LicenseDtos;
 using GenericLicensing.Domain.Aggregates;
 using GenericLicensing.Domain.Commands.License;
-using GenericLicensing.Domain.Queries;
 using GenericLicensing.Domain.Validators;
 using GenericLicensing.WebApi.Mappers;
+using GenericLicensing.WebApi.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +34,7 @@ public class LicenseController : ControllerBase
     LicenseAggregate licenseAggregate;
     try
     {
-      var command = new CreateLicenseCommand(dto.LicenseOwner.ToLicenseOwner(), dto.LicensedProduct.ToLicensedProduct(),
+      var command = new CreateLicenseCommand(dto.LicenseOwner.ToLicenseOwner(), dto.Product.ToLicensedProduct(),
         new CreateLicenseCommandValidator());
       licenseAggregate = await _mediator.Send(command);
     }
