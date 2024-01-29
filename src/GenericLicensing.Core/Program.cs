@@ -1,4 +1,8 @@
+using GenericLicensing.Application.CommandHandler;
+using GenericLicensing.Core;
 using GenericLicensing.Domain.Commands.License;
+using GenericLicensing.Domain.Events.License;
+using GenericLicensing.Persistence.Cosmos.EventStore;
 using MediatR;
 using Serilog;
 
@@ -20,7 +24,13 @@ builder.Services.AddApiVersioning();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMediatR(typeof(CreateLicenseCommand));
+builder.Services.AddMediatR(typeof(CreateLicenseCommand), typeof(CreatelicenseCommandHandler));
+builder.Services.AddScoped<IEventSerializer>(s => new EventSerializer(new[]
+{
+  typeof(LicenseCreatedEvent).Assembly
+}));
+
+builder.Services.AddCosmosDbInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

@@ -18,6 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\GenericLicensing.Application\GenericLicensing.Application.csproj"/>
+        <ProjectReference Include="..\GenericLicensing.Persistence.Cosmos\GenericLicensing.Persistence.Cosmos.csproj"/>
         <ProjectReference Include="..\GenericLicensing.WebApi\GenericLicensing.WebApi.csproj"/>
     </ItemGroup>
 
