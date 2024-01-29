@@ -16,6 +16,7 @@ public static class InfrastructureRegistrations
     services.AddDbContext<GenericLicenseDbContext>(options =>
       options.UseCosmos(config["cosmosEndpoint"], config["cosmosSecret"], config["dbName"]));
     services.AddScoped<IGenericLicenseDbContext, GenericLicenseDbContext>();
+    services.AddScoped<IUnitOfWork, UnitOfWork>();
 
     services.AddAggregateInfrastructure<LicenseAggregate>(config);
 

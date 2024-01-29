@@ -1,3 +1,5 @@
+using System.Net.Mime;
+using GenericLicensing.Application.Behaviors;
 using GenericLicensing.Application.CommandHandler;
 using GenericLicensing.Core;
 using GenericLicensing.Domain.Commands.License;
@@ -24,7 +26,14 @@ builder.Services.AddApiVersioning();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMediatR(typeof(CreateLicenseCommand), typeof(CreatelicenseCommandHandler));
+//builder.Services.AddMediatR(typeof(CreateLicenseCommand), typeof(CreatelicenseCommandHandler));
+builder.Services.AddMediatR(config =>
+{
+  config.RegisterServicesFromAssembly(typeof(CreateLicenseCommand).Assembly);
+  config.RegisterServicesFromAssembly(typeof(CreatelicenseCommandHandler).Assembly);
+  config.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
+});
+
 builder.Services.AddScoped<IEventSerializer>(s => new EventSerializer(new[]
 {
   typeof(LicenseCreatedEvent).Assembly

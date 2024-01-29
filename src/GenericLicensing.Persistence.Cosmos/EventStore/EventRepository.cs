@@ -68,9 +68,6 @@ public class EventRepository<TA> : IEventRepository<TA>
           eventType.AssemblyQualifiedName, data);
         await _dbContext.Events.AddAsync(eventData);
       }
-
-      _logger.LogInformation("Saving Changes...");
-      await _dbContext.SaveChangesAsync();
     }
     catch
     {

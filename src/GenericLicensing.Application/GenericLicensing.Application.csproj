@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\GenericLicensing.Domain\GenericLicensing.Domain.csproj"/>
+        <ProjectReference Include="..\GenericLicensing.Persistence.Cosmos\GenericLicensing.Persistence.Cosmos.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
